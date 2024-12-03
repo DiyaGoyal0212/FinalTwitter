@@ -22,9 +22,9 @@ function Chatbot() {
     
     setGeneratingAnswer(true);
     const currentQuestion = question;
-    setQuestion(""); // Clear input immediately after sending
+    setQuestion(""); 
     
-    // Add user question to chat history
+  
     setChatHistory(prev => [...prev, { type: 'question', content: currentQuestion }]);
     
     try {
