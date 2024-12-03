@@ -6,6 +6,7 @@ import Feed from './Feed';
 import Profile from './Profile';
 import Explore from './Explore';
 import Chatbot from './Chatbot';
+import Feedback from './Feedback';
 
 const Body = () => {
     const appRouter = createBrowserRouter([
@@ -34,6 +35,10 @@ const Body = () => {
         {
             path: "/chat",
             element: <Chatbot />
+        },
+        {
+            path: "/feedback",
+            element: <Feedback />
         }
     ])
     return (

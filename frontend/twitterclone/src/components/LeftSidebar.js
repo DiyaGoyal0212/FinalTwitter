@@ -3,21 +3,21 @@ import { CiHome } from "react-icons/ci";
 import { CiHashtag } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { CiUser } from "react-icons/ci";
-import { CiBookmark } from "react-icons/ci";
-import { AiOutlineLogout } from "react-icons/ai";
-import { Link,useNavigate } from 'react-router-dom';
-import {useSelector,useDispatch} from "react-redux";
+import { AiOutlineLogout } from "react-icons/ai";  
+import { BiMessageRoundedDots } from "react-icons/bi";  // Using a message icon as feedback
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { USER_API_END_POINT } from '../utils/constant';
-import toast from "react-hot-toast"
+import toast from "react-hot-toast";
 import { getMyProfile, getOtherUsers, getUser } from '../redux/userSlice';
- 
 
 const LeftSidebar = () => {
 
-    const {user} = useSelector(store=>store.user);
+    const { user } = useSelector(store => store.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const logoutHandler = async () => {
         try {
             const res = await axios.get(`${USER_API_END_POINT}/logout`);
@@ -29,7 +29,7 @@ const LeftSidebar = () => {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     return (
         <div className='w-[20%]'>
@@ -62,12 +62,13 @@ const LeftSidebar = () => {
                         </div>
                         <h1 className='font-bold text-lg ml-2'>Profile</h1>
                     </Link>
-                    <div className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full'>
+                    {/* Replacing CiBookmark with BiMessageRoundedDots */}
+                    <Link to="/feedback" className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full'>
                         <div>
-                            <CiBookmark size="24px" />
+                            <BiMessageRoundedDots size="24px" /> {/* Feedback icon */}
                         </div>
-                        <h1 className='font-bold text-lg ml-2'>Bookmarks</h1>
-                    </div>
+                        <h1 className='font-bold text-lg ml-2'>Feedback</h1> {/* Updated text */}
+                    </Link>
                     <div onClick={logoutHandler} className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full'>
                         <div>
                             <AiOutlineLogout size="24px" />
@@ -80,11 +81,11 @@ const LeftSidebar = () => {
                         </div>
                         <h1 className='font-bold text-lg ml-2'>Chat</h1>
                     </Link>
-                     <button className='px-4 py-2 border-none text-md bg-[#1D9BF0] w-full rounded-full text-white font-bold'>Post</button>
+                    <button className='px-4 py-2 border-none text-md bg-[#1D9BF0] w-full rounded-full text-white font-bold'>Post</button>
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default LeftSidebar
+export default LeftSidebar;
