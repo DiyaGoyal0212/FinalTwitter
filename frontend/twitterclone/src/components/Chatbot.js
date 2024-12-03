@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
-
 function Chatbot() {
   const [chatHistory, setChatHistory] = useState([]);
   const [question, setQuestion] = useState("");
@@ -19,14 +18,13 @@ function Chatbot() {
   async function generateAnswer(e) {
     e.preventDefault();
     if (!question.trim()) return;
-    
+
     setGeneratingAnswer(true);
     const currentQuestion = question;
     setQuestion(""); 
-    
-  
+
     setChatHistory(prev => [...prev, { type: 'question', content: currentQuestion }]);
-    
+
     try {
       const response = await axios({
         url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyB5YrX-e0JiS2aVqkt-xhjw4tSQhXlfQ1E",
@@ -47,16 +45,16 @@ function Chatbot() {
   }
 
   return (
-    <div className="h-screen w-full bg-gray-50 flex justify-center items-center">
-      <div className="w-full max-w-lg bg-white rounded-lg shadow-lg p-4">
-        <header className="text-center mb-4">
-          <h1 className="text-2xl font-semibold text-blue-500">Chat AI</h1>
+    <div className="min-h-screen flex justify-center items-center bg-gray-50 px-4">
+      <div className="w-full max-w-3xl bg-white rounded-lg shadow-lg p-6 sm:p-8">
+        <header className="text-center mb-6">
+          <h1 className="text-3xl font-semibold text-blue-500">Chat AI</h1>
         </header>
 
         {/* Scrollable Chat Container */}
         <div
           ref={chatContainerRef}
-          className="h-80 overflow-y-auto bg-gray-100 p-4 rounded-lg mb-4"
+          className="h-[450px] overflow-y-auto bg-gray-100 p-4 rounded-lg mb-6"
         >
           {chatHistory.length === 0 ? (
             <div className="text-center text-gray-600">
@@ -66,10 +64,8 @@ function Chatbot() {
             chatHistory.map((chat, index) => (
               <div key={index} className={`mb-4 ${chat.type === "question" ? "text-right" : "text-left"}`}>
                 <div
-                  className={`inline-block p-2 rounded-lg ${
-                    chat.type === "question"
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-gray-800"
+                  className={`inline-block p-3 rounded-lg ${
+                    chat.type === "question" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800"
                   }`}
                 >
                   <div>{chat.content}</div>
@@ -81,14 +77,13 @@ function Chatbot() {
         </div>
 
         {/* Input Form */}
-        <form onSubmit={generateAnswer} className="flex gap-2">
+        <form onSubmit={generateAnswer} className="flex flex-col sm:flex-row w-full gap-4">
           <textarea
             required
-            className="flex-1 border border-gray-300 rounded p-2"
+            className="flex-1 min-h-[80px] max-h-[200px] border border-gray-300 rounded p-4 resize-none"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
             placeholder="Ask anything..."
-            rows="2"
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
@@ -98,7 +93,7 @@ function Chatbot() {
           ></textarea>
           <button
             type="submit"
-            className={`px-4 py-2 bg-blue-500 text-white rounded-md ${
+            className={`w-full sm:w-auto px-4 py-2 bg-blue-500 text-white rounded-md ${
               generatingAnswer ? "opacity-50 cursor-not-allowed" : ""
             }`}
             disabled={generatingAnswer}
